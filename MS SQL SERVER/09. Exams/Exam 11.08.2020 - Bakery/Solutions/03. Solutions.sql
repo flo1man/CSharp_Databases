@@ -1,6 +1,6 @@
 USE Bakery
 
---2
+--- 02.Insert ---
 INSERT INTO Distributors
 	([Name], CountryId, AddressText, Summary)
 		VALUES
@@ -23,7 +23,7 @@ INSERT INTO Customers
 	('Josefa', 'Opitz', 43,	'F','0197887645',	17)
 
 
---3
+--- 03.Update ---
 UPDATE Ingredients
 	SET DistributorId = 35
 	WHERE [Name] IN ('Bay Leaf', 'Paprika', 'Poppy') 
@@ -33,18 +33,18 @@ UPDATE Ingredients
 	WHERE OriginCountryId = 8
 
 
---4
+---- 04.Delete ---
 DELETE FROM Feedbacks
 	WHERE CustomerId = 14 OR ProductId = 5
 
 
---5
+--- 05.Products by Price ---
 SELECT [Name], Price, [Description]
 	FROM Products
 	ORDER BY Price DESC, [Name]
 
 
---6
+--- 06.Negative Feedback ---
 SELECT ProductId, Rate, [Description], CustomerId, Age, Gender
 	FROM Feedbacks f
 	JOIN Customers c ON f.CustomerId = c.Id
@@ -52,24 +52,25 @@ SELECT ProductId, Rate, [Description], CustomerId, Age, Gender
 	ORDER BY ProductId DESC, Rate
 	
 
---7??
-SELECT CONCAT(FirstName, ' ', LastName), PhoneNumber, Gender
-	FROM Feedbacks f
-	LEFT JOIN Customers c ON f.CustomerId = c.Id
-	WHERE CustomerId IS NULL
-	ORDER BY CustomerId
+--- 07.Customers without Feedback ---
+SELECT CONCAT(c.FirstName, ' ', c.LastName),
+	c.PhoneNumber, c.Gender
+	FROM Customers c
+	LEFT JOIN Feedbacks f ON c.Id = f.CustomerId
+	WHERE f.Id IS NULL
+	ORDER BY c.Id
 
 
---8??
+--- 08.Customers by Criteria ---
 SELECT DISTINCT FirstName, Age, PhoneNumber
 	FROM Customers c
 	LEFT JOIN  Countries co ON c.CountryId = c.Id
-	WHERE (Age >= 21 AND CHARINDEX('an', FirstName) > 0)
-		OR (RIGHT(PhoneNumber, 2) = '38' AND co.[Name] != 'Greece')
+	WHERE (Age >= 21 AND FirstName LIKE '%an%')
+		OR (PhoneNumber LIKE '%38' AND co.[Name] <> 'Greece')
 	ORDER BY FirstName, Age DESC
 
 
---9
+--- 09.Middle Range Distributors ---
 SELECT d.[Name], i.[Name], p.[Name], AVG(Rate)
 	FROM Ingredients i
 	JOIN Distributors d ON i.DistributorId = d.Id
@@ -81,15 +82,22 @@ SELECT d.[Name], i.[Name], p.[Name], AVG(Rate)
 	ORDER BY d.[Name], i.[Name], p.[Name]
 
 
---10??
-SELECT c.[Name], d.[Name],
-		DENSE_RANK() OVER(PARTITION BY CountryId ORDER BY CountryId)
-	FROM Countries c
-	JOIN Distributors d ON d.CountryId = c.Id
-	ORDER BY c.[Name], d.[Name]
+--- 10.Country Representative ---
+SELECT CountryName, DistributorName
+	FROM (SELECT 
+		c.Name AS CountryName,
+		d.Name AS DistributorName,
+		COUNT(i.Id) AS Count, 
+		DENSE_RANK() OVER (PARTITION BY c.Name ORDER BY COUNT(i.Id) DESC) AS [Rank]
+		FROM Countries AS c
+		JOIN Distributors AS d ON c.Id = d.CountryId 
+		LEFT JOIN Ingredients AS i ON d.Id = i.DistributorId
+		GROUP BY c.Name, d.Name) as temp
+	WHERE Rank = 1
+	ORDER BY CountryName, DistributorName
 
 
---11
+--- 11.Customers with Countries ---
 CREATE VIEW v_UserWithCountries AS
 	SELECT CONCAT(c.FirstName, ' ', c.LastName) AS [CustomerName], Age, Gender, co.[Name]
 		FROM Customers c
@@ -99,12 +107,29 @@ CREATE VIEW v_UserWithCountries AS
 	--ORDER BY Age
 
 
---12
-CREATE TRIGGER tr_DelteRelationsOfProducts
-ON Products FOR DELETE
+--- 12. Delete Products ---
+CREATE TRIGGER tr_DeleteRelationsOfProducts
+ON Products INSTEAD OF DELETE
 AS
 BEGIN
-	DELETE FROM ProductsIngredients
-		WHERE ProductId = deleted.Id
+	
+	DELETE FROM Feedbacks
+		WHERE ProductId IN 
+		(SELECT p.Id 
+			FROM Products p
+			JOIN deleted d ON d.Id = p.Id)
 
+	DELETE FROM ProductsIngredients
+		WHERE ProductId IN 
+		(SELECT p.Id 
+			FROM Products p
+			JOIN deleted d ON d.Id = p.Id)
+
+	DELETE FROM Products
+		WHERE Products.Id IN 
+		(SELECT p.Id 
+			FROM Products p
+			JOIN deleted d ON d.Id = p.Id)
 END
+
+--DELETE FROM Products WHERE Id = 7
