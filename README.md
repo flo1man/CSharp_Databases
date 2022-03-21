@@ -5,7 +5,7 @@
 ## Course: [Database Basics MS SQL]
 SoftUni course Database Basics MS SQL
 
-## Course content:
+## DB Course content:
 - Databases Introduction
 - Basic CRUD (Create, Read, Update and Delete)
 - Table Relations (One to One, One to Many, Many ot Many)
@@ -13,3 +13,19 @@ SoftUni course Database Basics MS SQL
 - Joins, Subqueries and CTE Indices 
 - Data Aggregation (Group By, Min, Max, Avg, Count, Sum)
 - Database Programmability (Functions, Procedures and Triggers) and Transactions
+	
+## Course: [Entity Framework Core]
+SoftUni course Entity Framework Core
+
+## EFC Course content:
+- ADO.NET
+- ORM Fundamentals
+- Entity Framework Introduction
+- Entity Relations
+- LINQ
+- Advanced Querying
+- C# Auto Mapping Objects
+- JSON Processing
+- XML Processing
+- Best Practices And Architecture
+- NoSQL
