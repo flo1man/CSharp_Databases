@@ -13,6 +13,10 @@ SoftUni course Database Basics MS SQL
 - Joins, Subqueries and CTE Indices 
 - Data Aggregation (Group By, Min, Max, Avg, Count, Sum)
 - Database Programmability (Functions, Procedures and Triggers) and Transactions
+
+<p align="center">
+	<img src="https://www.fixedbuffer.com/wp-content/uploads/2018/09/EFCore.png" alt="EF Core" width="300" align="center"></a>
+<p>	
 	
 ## Course: [Entity Framework Core]
 SoftUni course Entity Framework Core
