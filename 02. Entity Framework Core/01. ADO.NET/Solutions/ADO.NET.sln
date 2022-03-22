@@ -7,13 +7,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "Demo\Demo.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P01_InitialSetup", "P01_InitialSetup\P01_InitialSetup.csproj", "{86A6FB97-56C2-4C6D-A7E8-8C4CCA515D76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P02_VillainNames", "P02_VillainNames\P02_VillainNames.csproj", "{0470256F-FBEE-41EC-A0ED-B5BF421FEDDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P02_VillainNames", "P02_VillainNames\P02_VillainNames.csproj", "{0470256F-FBEE-41EC-A0ED-B5BF421FEDDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03_MinionNames", "P03_MinionNames\P03_MinionNames.csproj", "{DB34769F-7899-4EBC-896C-273D0189C001}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03_MinionNames", "P03_MinionNames\P03_MinionNames.csproj", "{DB34769F-7899-4EBC-896C-273D0189C001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P04_AddMinion", "P04_AddMinion\P04_AddMinion.csproj", "{B9D63F56-9180-409C-914C-116922C6FF43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P04_AddMinion", "P04_AddMinion\P04_AddMinion.csproj", "{B9D63F56-9180-409C-914C-116922C6FF43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P05_ChangeTownNamesCasing", "P05_ChangeTownNamesCasing\P05_ChangeTownNamesCasing.csproj", "{F479D348-0DBF-4118-A509-792FD22883B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P05_ChangeTownNamesCasing", "P05_ChangeTownNamesCasing\P05_ChangeTownNamesCasing.csproj", "{F479D348-0DBF-4118-A509-792FD22883B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06_RemoveVillain", "P06_RemoveVillain\P06_RemoveVillain.csproj", "{BDB628C1-3E7C-41A1-B8C0-47E57C9F26EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P07_PrintAllMinionNames", "P07_PrintAllMinionNames\P07_PrintAllMinionNames.csproj", "{8119B4FF-D208-44D1-83F1-6F1EB02AA4D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P08_IncreaseMinionAge", "P08_IncreaseMinionAge\P08_IncreaseMinionAge.csproj", "{D4A8A1D3-3D09-415C-A45B-E93236FED456}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P09_IncreaseAgeStoredProcedure", "P09_IncreaseAgeStoredProcedure\P09_IncreaseAgeStoredProcedure.csproj", "{8885DAB0-22DF-42F2-9080-654A6FB879E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +53,22 @@ Global
 		{F479D348-0DBF-4118-A509-792FD22883B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F479D348-0DBF-4118-A509-792FD22883B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F479D348-0DBF-4118-A509-792FD22883B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDB628C1-3E7C-41A1-B8C0-47E57C9F26EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB628C1-3E7C-41A1-B8C0-47E57C9F26EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB628C1-3E7C-41A1-B8C0-47E57C9F26EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB628C1-3E7C-41A1-B8C0-47E57C9F26EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8119B4FF-D208-44D1-83F1-6F1EB02AA4D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8119B4FF-D208-44D1-83F1-6F1EB02AA4D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8119B4FF-D208-44D1-83F1-6F1EB02AA4D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8119B4FF-D208-44D1-83F1-6F1EB02AA4D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4A8A1D3-3D09-415C-A45B-E93236FED456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4A8A1D3-3D09-415C-A45B-E93236FED456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4A8A1D3-3D09-415C-A45B-E93236FED456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4A8A1D3-3D09-415C-A45B-E93236FED456}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8885DAB0-22DF-42F2-9080-654A6FB879E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8885DAB0-22DF-42F2-9080-654A6FB879E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8885DAB0-22DF-42F2-9080-654A6FB879E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8885DAB0-22DF-42F2-9080-654A6FB879E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
