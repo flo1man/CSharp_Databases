@@ -16,52 +16,114 @@ namespace SoftUni
         {
             var db = new SoftUniContext();
 
-            // 3 ++
+            // 3 
             //Console.WriteLine(GetEmployeesFullInformation(db));
 
-            // 4 ++ 
+            // 4 
             //Console.WriteLine(GetEmployeesWithSalaryOver50000(db));
 
-            // 5 ++
+            // 5 
             //Console.WriteLine(GetEmployeesFromResearchAndDevelopment(db));
 
-            // 6 ++
+            // 6 
             //Console.WriteLine(AddNewAddressToEmployee(db));
 
-            // 7 ??
-            Console.WriteLine(GetEmployeesInPeriod(db));
+            // 7 
+            //Console.WriteLine(GetEmployeesInPeriod(db));
 
-            // 8 ??
-            //Console.WriteLine();
+            // 8 
+            //Console.WriteLine(GetAddressesByTown(db));
 
-            // 9 ++
+            // 9 
             //Console.WriteLine(GetEmployee147(db));
 
-            // 10 ??
+            // 10 
             //Console.WriteLine(GetDepartmentsWithMoreThan5Employees(db));
 
-            // 11 ++
+            // 11 
             //Console.WriteLine(GetLatestProjects(db));
 
-            // 12 ??
-            //Console.WriteLine(IncreaseSalary(db));
+            // 12 
+            //Console.WriteLine(IncreaseSalaries(db));
 
-            // 13 ++
+            // 13 
             //Console.WriteLine(GetEmployeesByFirstNameStartingWithSa(db));
 
-            // 14
-            //Console.WriteLine();
+            // 14 
+            //Console.WriteLine(DeleteProjectById(db));
 
-            // 15 ??
+            // 15 
             //Console.WriteLine(RemoveTown(db));
+        }
+
+        public static string DeleteProjectById(SoftUniContext context)
+        {
+            var empProjects = context.EmployeesProjects
+                .Where(x => x.ProjectId == 2)
+                .ToList();
+
+            foreach (var item in empProjects)
+            {
+                context.EmployeesProjects.Remove(item);
+            }
+
+            context.SaveChanges();
+
+            var project = context.Projects.Find(2);
+            context.Projects.Remove(project);
+
+            context.SaveChanges();
+
+            var projects = context.Projects.Take(10).ToList();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in projects)
+            {
+                sb.AppendLine(item.Name);
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetAddressesByTown(SoftUniContext context)
+        {
+            var addresses = context.Addresses
+                .Include(x => x.Employees)
+                .Include(x => x.Town)
+                .Select(x => new
+                {
+                    x.AddressText,
+                    TownName = x.Town.Name,
+                    Count = x.Employees.Where(e => e.Address.AddressText == x.AddressText).Count()
+                    // Count = x.Employees.Count(),
+                })
+                .OrderByDescending(x => x.Count)
+                .ThenBy(x => x.TownName)
+                .ThenBy(x => x.AddressText)
+                .Take(10)
+                .ToList();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var address in addresses)
+            {
+                sb.AppendLine($"{address.AddressText}, {address.TownName} - {address.Count} employees");
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string RemoveTown(SoftUniContext context)
         {
-            var addresses = context.Addresses.Where(x => x.TownId == 4).ToList();
+            var town = context.Towns
+                .Include(x => x.Addresses)
+                .FirstOrDefault(x => x.Name == "Seattle");
+
+            var addresses = town.Addresses.Select(x => x.AddressId).ToList();
 
             var employees = context.Employees
-                .Where(x => addresses.Any(a => a.AddressId == x.AddressId))
+                .Where(x => x.AddressId.HasValue && addresses.Contains(x.AddressId.Value))
                 .ToList();
 
             foreach (var item in employees)
@@ -69,20 +131,26 @@ namespace SoftUni
                 item.AddressId = null;
             }
 
+            foreach (var item in addresses)
+            {
+                var addres = context.Addresses
+                    .FirstOrDefault(x => x.AddressId == item);
 
-            var town = context.Towns.Find("Seattle");
+                context.Addresses.Remove(addres);
+            }
+
             context.Towns.Remove(town);
 
             context.SaveChanges();
 
-            return "";
+            return $"{addresses.Count()} addresses in Seattle were deleted";
         }
 
         public static string GetEmployeesByFirstNameStartingWithSa(SoftUniContext context)
         {
             var employees = context.Employees
                 //.Where(x => EF.Functions.Like(x.FirstName, "sa%"))
-                .Where(x => x.FirstName.StartsWith("Sa"))
+                .Where(x => x.FirstName.StartsWith("Sa") || x.FirstName.StartsWith("sa"))
                 .OrderBy(x => x.FirstName)
                 .ThenBy(x => x.LastName)
                 .ToList();
@@ -97,23 +165,33 @@ namespace SoftUni
             return sb.ToString().TrimEnd();
         }
 
-        public static string IncreaseSalary(SoftUniContext context)
+        public static string IncreaseSalaries(SoftUniContext context)
         {
             var employees = context.Employees
-                .Select(x => new
-                {
-                    x.FirstName,
-                    x.LastName,
-                    x.Salary,
-                    Department = x.Departments
-                     .Where(d => d.DepartmentId == x.DepartmentId 
-                      && (d.Name == "Engineering" || d.Name == "Tool Design"
-                      || d.Name == "Marketing" || d.Name == "Information Services"))
-                })
-                .Where(x => x.Department.Count() > 0)
+                .Include(x => x.Departments)
+                .Where(x => x.Department.Name == "Engineering"
+                    || x.Department.Name == "Tool Design"
+                    || x.Department.Name == "Marketing"
+                    || x.Department.Name == "Information Services")
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.LastName)
                 .ToList();
 
-            return "";
+            foreach (var emp in employees)
+            {
+                emp.Salary *= 1.12m;
+            }
+
+            context.SaveChanges();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var emp in employees)
+            {
+                sb.AppendLine($"{emp.FirstName} {emp.LastName} (${emp.Salary:f2})");
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string GetLatestProjects(SoftUniContext context)
@@ -135,7 +213,41 @@ namespace SoftUni
 
         public static string GetDepartmentsWithMoreThan5Employees(SoftUniContext context)
         {
-            return "";
+            var departments = context.Departments
+                .Select(x => new
+                {
+                    x.Name,
+                    x.Manager.FirstName,
+                    x.Manager.LastName,
+                    Count = x.Employees.Count(),
+                    Employees = x.Employees.Select(e => new
+                    {
+                        e.FirstName,
+                        e.LastName,
+                        e.JobTitle
+                    })
+                    .OrderBy(x => x.FirstName)
+                    .ThenBy(x => x.LastName)
+                    .ToList()
+                })
+                .Where(x => x.Count > 5)
+                .OrderBy(x => x.Count)
+                .ThenBy(x => x.Name)
+                .ToList();
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in departments)
+            {
+                sb.AppendLine($"{item.Name} - {item.FirstName} {item.LastName}");
+
+                foreach (var emp in item.Employees)
+                {
+                    sb.AppendLine($"{emp.FirstName} {emp.LastName} - {emp.JobTitle}");
+                }
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string GetEmployee147(SoftUniContext context)
@@ -152,18 +264,17 @@ namespace SoftUni
                         .Select(p => new { Name = p.Project.Name })
                         .OrderBy(p => p.Name)
                         .ToList()
-                });
+                })
+                .FirstOrDefault();
 
             StringBuilder sb = new StringBuilder();
 
-            foreach (var emp in employee)
-            {
-                sb.AppendLine($"{emp.EmployeeName} - {emp.Job}");
 
-                foreach (var project in emp.ProjectName)
-                {
-                    sb.AppendLine($"{project.Name}");
-                }
+            sb.AppendLine($"{employee.EmployeeName} - {employee.Job}");
+
+            foreach (var project in employee.ProjectName)
+            {
+                sb.AppendLine($"{project.Name}");
             }
 
             return sb.ToString().TrimEnd();
@@ -171,38 +282,41 @@ namespace SoftUni
 
         public static string GetEmployeesInPeriod(SoftUniContext context)
         {
-            //var employees = context.Employees
-            //    .Select(e => new
-            //    {
-            //        EmployeeName = e.FirstName + " " + e.LastName,
-            //        EmployeeId = e.EmployeeId,
-            //        EmployeesProjects = e.EmployeesProjects
-            //        .Where(x => x.EmployeeId == e.EmployeeId),
-            //        ProjectName = e.EmployeesProjects.Where(x => x.EmployeeId == e.EmployeeId)
-            //            .Select(p => new 
-            //            {   Name = p.Project.Name,
-            //                Start = p.Project.StartDate,
-            //                End = p.Project.EndDate == null ? "not finished" : p.Project.EndDate.ToString()
-            //            })
-            //    }).ToList();
-
             var employees = context.Employees
-                .Include(x => x.Manager)
                 .Include(x => x.EmployeesProjects)
                 .ThenInclude(x => x.Project)
+                .Where(x => x.EmployeesProjects.
+                        Any(p => p.Project.StartDate.Year >= 2001
+                        && p.Project.StartDate.Year <= 2003))
+                .Select(x => new
+                {
+                    EmployeeFirstName = x.FirstName,
+                    EmployeeLastName = x.LastName,
+                    ManagerFirstName = x.Manager.FirstName,
+                    ManagerLastName = x.Manager.LastName,
+                    Projects = x.EmployeesProjects.Select(p => new
+                    {
+                        ProjectName = p.Project.Name,
+                        StartDate = p.Project.StartDate,
+                        EndDate = p.Project.EndDate == null ? "not finished" : p.Project.EndDate.ToString(),
+                    })
+                })
                 .Take(10)
                 .ToList();
 
+            StringBuilder sb = new StringBuilder();
+
             foreach (var emp in employees)
             {
-                Console.WriteLine($"{emp.FirstName} {emp.LastName} - Manager: {emp.Manager.FirstName} {emp.Manager.LastName}");
+                sb.AppendLine($"{emp.EmployeeFirstName} {emp.EmployeeLastName} - Manager: {emp.ManagerFirstName} {emp.ManagerLastName}");
 
-                foreach (var project in emp.EmployeesProjects)
+                foreach (var project in emp.Projects)
                 {
-                    Console.WriteLine($"--{project.Project.Name} - {project.Project.StartDate} - {project.Project.EndDate}");
+                    sb.AppendLine($"--{project.ProjectName} - {project.StartDate} - {project.EndDate}");
                 }
             }
-            return "";
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string AddNewAddressToEmployee(SoftUniContext context)
@@ -245,7 +359,7 @@ namespace SoftUni
         public static string GetEmployeesFromResearchAndDevelopment(SoftUniContext context)
         {
             var employees = context.Employees
-                .Where(x => x.Department.Name  == "Research and Development")
+                .Where(x => x.Department.Name == "Research and Development")
                 .Select(x => new
                 {
                     Department = x.Department.Name,
