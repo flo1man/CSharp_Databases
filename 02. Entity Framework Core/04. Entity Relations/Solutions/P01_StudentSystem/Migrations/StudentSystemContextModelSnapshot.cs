@@ -27,7 +27,6 @@ namespace P01_StudentSystem.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
@@ -36,7 +35,6 @@ namespace P01_StudentSystem.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(80)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(80)");
 
                     b.Property<decimal>("Price")
@@ -59,8 +57,7 @@ namespace P01_StudentSystem.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<int>("ContentType")
                         .HasColumnType("int");
@@ -96,7 +93,6 @@ namespace P01_StudentSystem.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ResourceType")
@@ -104,8 +100,7 @@ namespace P01_StudentSystem.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ResourceId");
 
@@ -127,7 +122,6 @@ namespace P01_StudentSystem.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PhoneNumber")

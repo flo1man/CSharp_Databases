@@ -19,13 +19,14 @@ namespace Demo
 
         }
 
-        // ConnectionString
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseSqlServer("Server=.;Database=EFCoreDemo;Integrated Security=true");
             }
+
+            base.OnConfiguring(optionsBuilder);
         }
 
         public DbSet<Employee> Employees { get; set; }

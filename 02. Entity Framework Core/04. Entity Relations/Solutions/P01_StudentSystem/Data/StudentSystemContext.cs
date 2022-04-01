@@ -41,30 +41,6 @@ namespace P01_StudentSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Student>()
-                .Property(x => x.Name)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<Course>()
-                .Property(x => x.Name)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<Course>()
-                .Property(x => x.Description)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<Resource>()
-                .Property(x => x.Name)
-                .IsUnicode(true);
-
-            modelBuilder.Entity<Resource>()
-                .Property(x => x.Url)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Homework>()
-                .Property(x => x.Content)
-                .IsUnicode(false);
-
             modelBuilder.Entity<StudentCourse>()
                 .HasKey(x => new {x.StudentId, x.CourseId});
         }

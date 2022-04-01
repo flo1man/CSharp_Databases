@@ -30,7 +30,6 @@ namespace P01_StudentSystem.Data.Models
         [Required]
         public DateTime EndDate { get; set; }
 
-        [Column(TypeName ="decimal(18,2)")]
         [Required]
         public decimal Price { get; set; }
 

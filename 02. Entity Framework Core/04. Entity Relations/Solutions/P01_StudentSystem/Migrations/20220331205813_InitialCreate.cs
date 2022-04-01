@@ -47,7 +47,7 @@ namespace P01_StudentSystem.Migrations
                     ResourceId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Url = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ResourceType = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -68,7 +68,7 @@ namespace P01_StudentSystem.Migrations
                 {
                     HomeworkId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "varchar(max)", unicode: false, nullable: false),
+                    Content = table.Column<string>(type: "varchar(255)", nullable: false),
                     ContentType = table.Column<int>(type: "int", nullable: false),
                     SubmissionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),

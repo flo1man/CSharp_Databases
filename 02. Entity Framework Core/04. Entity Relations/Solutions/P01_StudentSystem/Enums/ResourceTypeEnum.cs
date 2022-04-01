@@ -6,9 +6,9 @@ namespace P01_StudentSystem.Enums
 {
     public enum ResourceTypeEnum
     {
-        Video,
-        Presentation,
-        Document,
-        Other
+        Video = 1,
+        Presentation = 2,
+        Document = 3,
+        Other = 4
     }
 }
