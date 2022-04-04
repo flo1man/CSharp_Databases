@@ -19,7 +19,7 @@
             Console.WriteLine(ExportAlbumsInfo(context, producerId));
 
             int duration = 4;
-            //Console.WriteLine(ExportSongsAboveDuration(context, duration));
+            Console.WriteLine(ExportSongsAboveDuration(context, duration));
         }
 
         public static string ExportAlbumsInfo(MusicHubDbContext context, int producerId)
