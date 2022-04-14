@@ -14,7 +14,7 @@ SoftUni course Database Basics MS SQL
 - Data Aggregation (Group By, Min, Max, Avg, Count, Sum)
 - Database Programmability (Functions, Procedures and Triggers) and Transactions
 
-<hr size="10" color="grey">	
+<hr size="11" color="grey">	
 	
 <p align="center">
 	<img src="https://www.fixedbuffer.com/wp-content/uploads/2018/09/EFCore.png" alt="EF Core" width="300" align="center"></a>
