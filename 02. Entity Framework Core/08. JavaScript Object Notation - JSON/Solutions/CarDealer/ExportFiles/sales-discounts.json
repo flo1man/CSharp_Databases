@@ -1,0 +1,92 @@
+[
+  {
+    "Make": "Seat",
+    "Model": "Mii",
+    "TravelledDistance": 473519569.00,
+    "Name": "Ann Mcenaney",
+    "Discount": 30,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Renault",
+    "Model": "Alaskan",
+    "TravelledDistance": 303853081.00,
+    "Name": "Taina Achenbach",
+    "Discount": 10,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Toyota",
+    "Model": "Prius",
+    "TravelledDistance": 141313729.00,
+    "Name": "Francis Mckim",
+    "Discount": 30,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Peugeot",
+    "Model": "405",
+    "TravelledDistance": 428581244.00,
+    "Name": "Donnetta Soliz",
+    "Discount": 15,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Citroen",
+    "Model": "C3",
+    "TravelledDistance": 486926519.00,
+    "Name": "Hipolito Lamoreaux",
+    "Discount": 15,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Alfa Romeo",
+    "Model": "Giulietta",
+    "TravelledDistance": 128074332.00,
+    "Name": "Johnette Derryberry",
+    "Discount": 0,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Peugeot",
+    "Model": "407",
+    "TravelledDistance": 336906707.00,
+    "Name": "Brett Brickley",
+    "Discount": 30,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Seat",
+    "Model": "Ibiza",
+    "TravelledDistance": 390958489.00,
+    "Name": "Nisha Markwell",
+    "Discount": 30,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Citroen",
+    "Model": "C1",
+    "TravelledDistance": 339260713.00,
+    "Name": "Brett Brickley",
+    "Discount": 30,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  },
+  {
+    "Make": "Nissan",
+    "Model": "Altima",
+    "TravelledDistance": 407562858.00,
+    "Name": "Emmitt Benally",
+    "Discount": 10,
+    "price": "0.00",
+    "priceWithoutDiscount": "0.00"
+  }
+]
